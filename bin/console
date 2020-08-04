@@ -10,5 +10,16 @@ require "coffee"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start(__FILE__)
+require "pry"
+
+if ARGV.length != 1
+  require "irb"
+  IRB.start(__FILE__)
+else
+  file = FileProcessor.new(ARGV[0])
+  file.lines.each do |line|
+    command = line.split(" ")
+    send(command[0], *command[1..-1])
+  end
+end
+
